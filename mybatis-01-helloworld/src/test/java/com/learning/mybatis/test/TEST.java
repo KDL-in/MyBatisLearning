@@ -36,4 +36,23 @@ public class TEST {
             );
         }
     }
+
+    @Test
+    public void testInsert() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            BookMapper mapper = sqlSession.getMapper(BookMapper.class);
+            System.out.println(mapper.insertBook(new Book("ISBN-053", "B2", 586)));
+//            sqlSession.commit();
+        }
+    }
+
+    @Test
+    public void testUpdate() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            BookMapper mapper = sqlSession.getMapper(BookMapper.class);
+//            System.out.println(mapper.updateBook(new Book("ISBN-055", null, 888)));
+            System.out.println(mapper.deleteBook("ISBN-055"));
+            sqlSession.commit();
+        }
+    }
 }
