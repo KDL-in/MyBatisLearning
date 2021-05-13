@@ -18,4 +18,40 @@
     <delete id="deleteBook" >
         delete from book where isbn = #{isbn}
     </delete>
+    <!--级联查询，自定义规则map-->
+    <resultMap id="map1" type="com.learning.mybatis.bean2.Book">
+        <result column="isbn" property="isbn"/>
+        <result column="book_name" property="bookName"/>
+        <result column="bs_isbn" property="bookStock.isbn"/>
+        <result column="stock" property="bookStock.stock"/>
+    </resultMap>
+    <!--级联查询，自定义规则map二, association属性-->
+    <resultMap id="map2" type="com.learning.mybatis.bean2.Book">
+        <result column="isbn" property="isbn"/>
+        <result column="book_name" property="bookName"/>
+        <association property="bookStock" javaType="com.learning.mybatis.bean2.BookStock">
+            <result column="bs_isbn" property="isbn"/>
+            <result column="stock" property="stock"/>
+        </association>
+    </resultMap>
+
+    <select id="selectBookAndStock" resultMap="map2">
+        select book.isbn isbn, book_name, price, book_stock.isbn bs_isbn, stock
+        from book, book_stock
+        where book.isbn =  book_stock.isbn and book.isbn = #{isbn}
+    </select>
+
+    <!--级联查询，自定义规则map二, association属性-->
+    <resultMap id="map3" type="com.learning.mybatis.bean2.Book">
+        <result column="isbn" property="isbn"/>
+        <result column="book_name" property="bookName"/>
+        <association property="bookStock"
+                     select="com.learning.mybatis.mapper.BookStockMapper.selectBookStock"
+                     column="isbn">
+        </association>
+    </resultMap>
+
+    <select id="selectBookStep" resultMap="map3">
+        select * from book where isbn = #{isbn}
+    </select>
 </mapper>

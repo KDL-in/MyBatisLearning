@@ -6,6 +6,9 @@
 <!--    全局设置，此处设置驼峰命名和数据库标准命名的映射-->
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+<!--        开启懒加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
 <!--    环境——数据源配置-->
     <environments default="development">
@@ -22,5 +25,6 @@
 <!--    mappers映射，每个数据表对应一个mapper，负责映射接口——sql语句，-->
     <mappers>
         <mapper resource="mapper/BookMapper.xml"/>
+        <mapper resource="mapper/BookStockMapper.xml"/>
     </mappers>
 </configuration>
